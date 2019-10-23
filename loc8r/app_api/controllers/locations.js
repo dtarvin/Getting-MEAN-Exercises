@@ -167,7 +167,30 @@ const locationsUpdateOne = (req, res) => {
 	);
 };
 
-const locationsDeleteOne = (req, res) => { };
+const locationsDeleteOne = (req, res) => { 
+  const {locationid} = req.params;
+  if (locationid) {
+    Loc
+      .findByIdAndRemove(locationid)
+      .exec((err, location) => {
+        if (err) {
+          return res
+            .status(404)
+            .json(err);
+        }
+        res
+          .status(204)
+          .json(null);
+      }
+    );
+  } else {
+    res
+      .status(404)
+      .json({
+        "message": "No location"
+      });
+  }
+};
 
 module.exports = {
     locationsListByDistance,
