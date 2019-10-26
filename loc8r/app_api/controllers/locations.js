@@ -125,8 +125,8 @@ const locationsUpdateOne = (req, res) => {
 		.exec((err, location) => {
 			if (!location) {
 				return res
-					.json(404)
-					.status({
+					.status(404)
+					.json({
 						"message": "locationid not found"
 					});
 			} else if (err) {

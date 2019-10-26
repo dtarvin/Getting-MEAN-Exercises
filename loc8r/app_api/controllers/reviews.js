@@ -52,20 +52,36 @@ const doAddReview = (req, res, location) => {
 					.status(201)
 					.json(thisReview);
 			}
-		})
+		});
 	}
-}
-
-const reviewsCreate = (req, res) => { 
-	res
-		.status(200)
-		.json({"status" : "success"});
 };
+
+const reviewsCreate = (req, res) => {
+	const locationId = req.params.locationid;
+	if (locationId) {
+		Loc
+			.findById(locationId)
+			.select('reviews')
+			.exec((err, location) => {
+				if (err) {
+					res
+						.status(400)
+						.json(err);
+				} else {
+					doAddReview(req, res, location);
+				}
+			});
+	} else {
+		res
+			.status(404)
+			.json({"message": "Location not found"});
+	}
+};
+
 const reviewsReadOne = (req, res) => { 
 	Loc
 		.findById(req.params.locationid)
 		.select('name reviews')
-
 		.exec((err, location) => {
 			if (!location) {
 				return res
@@ -82,12 +98,12 @@ const reviewsReadOne = (req, res) => {
 				const review = location.reviews.id(req.params.reviewid);
 				if (!review) {
 					return res
-						.status(400)
+						.status(404)
 						.json({
-							"message": "review not found"
+							"message": "Review not found"
 						});
 				} else {
-					response = {
+					const response = {
 						location : {
 							name: location.name,
 							id: req.params.locationid
@@ -102,7 +118,7 @@ const reviewsReadOne = (req, res) => {
 				return res
 					.status(404)
 					.json({
-						"message": "no reviews found"
+						"message": "No reviews found"
 					});
 			}
     });

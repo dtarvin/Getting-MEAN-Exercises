@@ -33,7 +33,7 @@ const homelist = (req, res) => {
 const locationInfo = (req, res) => {
 	res.render('location-info', { 
 		title: 'Starcups',
-		pageHeader: {title: 'Starcups'},
+		pageHeader: {title: 'Loc8r'},
 		sidebar: {
 			context: 'is on Loc8r because it has accessible wifi and space to sit down with your laptop and get some work done.',
 			callToAction: 'If you\'ve been and you like it - or if you don\'t - please leave a review to help other people just like you.'
@@ -43,7 +43,7 @@ const locationInfo = (req, res) => {
 			address: '125 High Street, Reading, RG6 1PS',
 			rating: 3,
 			facilities: ['Hot drinks', 'Food', 'Premium wifi'],
-			coords: {lat: 42.524619, lng: -71.111730},
+			coords: {lat: 51.455041, lng: -0.9690884},
 			openingTimes: [{
 				days: 'Monday - Friday',
 				opening: '7:00am',

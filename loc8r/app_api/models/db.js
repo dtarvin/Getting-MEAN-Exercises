@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
-const dbURI = 'mongodb://localhost/Loc8r';
+const host = process.env.DB_HOST || '127.0.0.1'
+const dbURL = `mongodb://${host}/Loc8r`;
+const readLine = require('readline');
 
-mongoose.connect(dbURI, {useNewUrlParser: true});
+const connect = () => {
+	setTimeout(() => mongoose.connect(dbURL, {useNewUrlParser: true, useCreateIndex: true}), 1000);
+}
 
 mongoose.connection.on('connected', () => {
 	console.log(`Mongoose connected to ${dbURI}`);
@@ -9,11 +13,22 @@ mongoose.connection.on('connected', () => {
 
 mongoose.connection.on('error', err => {
   console.log('Mongoose connection error:', err);
+  return connect();
 });
 
 mongoose.connection.on('disconnected', () => {
   console.log('Mongoose disconnected');
 });
+
+if (process.platform === 'win32') {
+	const rl = readLine.createInterface({
+		input: process.stdin,
+		output: process.stdout
+	});
+	rl.on ('SIGINT', () => {
+		process.emit("SIGINT");
+	});
+}
 
 const gracefulShutdown = (msg, callback) => {
 	mongoose.connection.close( () => {
@@ -39,5 +54,7 @@ process.on('SIGTERM', () => {
 		process.exit(0);
 	});
 });
+
+connect();
 
 require('./locations');

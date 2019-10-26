@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const openingTimeSchema = new mongoose.Schema({
+const openingTimesSchema = new mongoose.Schema({
 	days: {
 		type: String,
 		required: true
@@ -45,7 +45,7 @@ const locationSchema = new mongoose.Schema({
 		type: { type: String },
 		coordinates: [Number]
 	},
-	openingTimes: [openingTimeSchema],
+	openingTimes: [openingTimesSchema],
 	reviews: [reviewSchema]
 });
 locationSchema.index({coords: '2dsphere'});
