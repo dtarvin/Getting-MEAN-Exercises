@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"Loc8r.locations"},{"v":2,"key":{"coords":"2dsphere"},"name":"coords_2dsphere","ns":"Loc8r.locations","background":true,"2dsphereIndexVersion":3}],"uuid":"4ef74c4c8174450c8c4306d2d75cb2cf"}
